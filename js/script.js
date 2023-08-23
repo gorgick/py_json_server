@@ -6,6 +6,35 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(res => {
         console.log(res)
         buildCards(res);
+        function getOptions(word, machines) {
+            return machines.filter(s => {
+                const regex = new RegExp(word, 'gi');
+                return s.title.match(regex);
+            })
+        };
+
+        function displayOptions() {
+            console.log(this.value);
+            const options = getOptions(this.value, res)
+            const html = options
+                .map(res => {
+                    const regex = new RegExp(this.value, 'gi');
+                    const machineName = res.title.replace(regex,
+                        `<span class="hl">${this.value}</span>`
+                    )
+                    return `<li><span>${machineName}</li></span>`;
+                })
+                .slice(0,7)
+                .join("");
+            searchOptions.innerHTML = this.value ? html: null;
+        }
+
+        const searchInput = document.querySelector(".search");
+        const searchOptions = document.querySelector(".options");
+
+        searchInput.addEventListener("change", displayOptions)
+        searchInput.addEventListener("keyup", displayOptions)
+
     });
 
 
