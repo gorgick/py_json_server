@@ -29,7 +29,8 @@ def get_page_data(html):
             cost = price.find('span').next_sibling.text
             if cost == " p.":
                 cost = price.find('span').text
-            data = {"address": f'https://shop.by{a}', "title": title, "cost": cost}
+            data = {"address": f'https://shop.by{a}', "title": title,
+                    "cost": float("".join(cost.split()).replace(',', '.'))}
             data_list.append(data)
 
 
